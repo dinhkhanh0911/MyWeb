@@ -1,0 +1,14 @@
+D:\MyProject\DataBaseIO\bin\Debug\net4.8\DataBaseIO.dll
+D:\MyProject\DataBaseIO\bin\Debug\net4.8\DataBaseIO.pdb
+D:\MyProject\DataBaseIO\bin\Debug\net4.8\EntityFramework.SqlServer.dll
+D:\MyProject\DataBaseIO\bin\Debug\net4.8\EntityFramework.dll
+D:\MyProject\DataBaseIO\bin\Debug\net4.8\DatabaseProvider.dll
+D:\MyProject\DataBaseIO\bin\Debug\net4.8\DatabaseProvider.pdb
+D:\MyProject\DataBaseIO\bin\Debug\net4.8\DatabaseProvider.dll.config
+D:\MyProject\DataBaseIO\obj\Debug\net4.8\DataBaseIO.csprojAssemblyReference.cache
+D:\MyProject\DataBaseIO\obj\Debug\net4.8\DataBaseIO.AssemblyInfoInputs.cache
+D:\MyProject\DataBaseIO\obj\Debug\net4.8\DataBaseIO.AssemblyInfo.cs
+D:\MyProject\DataBaseIO\obj\Debug\net4.8\DataBaseIO.csproj.CoreCompileInputs.cache
+D:\MyProject\DataBaseIO\obj\Debug\net4.8\DataBaseIO.csproj.CopyComplete
+D:\MyProject\DataBaseIO\obj\Debug\net4.8\DataBaseIO.dll
+D:\MyProject\DataBaseIO\obj\Debug\net4.8\DataBaseIO.pdb

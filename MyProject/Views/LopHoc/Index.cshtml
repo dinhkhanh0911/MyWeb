@@ -1,0 +1,96 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="body-left col-sm-12 col-md-12  col-lg-3">
+    @Html.Partial("_Menu")
+</div>
+<div class="body-right col-sm-12 col-md-12 col-xs-12 col-lg-9">
+    <div class="title-new">
+        <h3 class="text-center"> Học phần </h3>
+        <div class="searchHP">
+            <div class="form-group">
+
+
+                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">
+                    Tham gia lớp học
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="tlu-menu">
+
+        <div class="column-2">
+            <ul id="list-element">
+            </ul>
+            <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+
+                            <h4 class="modal-title">Tham gia</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <input type="text" class="form-control form-control-user"
+                                       id="inputMaLopHoc"
+                                       placeholder="Nhập mã lớp học">
+                                <span class="form-message"></span>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" id="btn-submit">Tham gia</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script type="text/javascript"
+        src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js">
+</script>
+@section scripts{
+        <script>
+            $('#btn-submit').click(function () {
+                let input = $('#inputMaLopHoc').val().trim();
+                if (input == '') {
+                    alert('Vui lòng nhập mã');
+                    return;
+                }
+                $.ajax({
+                    url: '/LopHoc/thamGiaLopHoc',
+                    type: 'post',
+                    data: {
+                        input : input
+                    },
+                    success: function (data) {
+                        if (data.code == 404) {
+                            alert('Không có lớp học tương ứng');
+                        }
+                        if (data.code == 200) {
+                            alert('Tham gia lớp học thành công');
+                        }
+                        if (data.code == 500) {
+                            alert('Tham gia thất bại');
+                        }
+                        if (data.code == 100) {
+                            alert('Bạn đã tham gia lớp học');
+                        }
+                        
+                    }
+                })
+            })
+        </script>
+        
+}

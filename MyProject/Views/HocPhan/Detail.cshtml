@@ -1,0 +1,127 @@
+﻿
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="term container ">
+    <div class="row border-bottom">
+        <div class="col-sm-2 element-left" >
+            <div class="title">
+                <div class="name-term">
+                    <h1 >Động vật</h1>
+                </div>
+                <ul class="learn-term">
+                    <li>
+                        <a>
+                            <p>Học</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a>
+                            <p>Kiểm tra</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-10  text-center element-right" >
+            <div class="owl-carousel owl-theme owl-carousel-new">
+                <div class="item">
+                    <div class="tag-term" id="convert">
+                        Dog
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="tag-term">
+                        Fish
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="tag-term">
+                        Fish
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="tag-term">
+                        Fish
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="tag-term">
+                        Fish
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="tag-term">
+                        Fish
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="nav-new" >
+                <button class="customPrevBtn">
+                    <i class=" fa fa-chevron-left" aria-hidden="true"></i>
+                </button>
+                <button class="customNextBtn ">
+                    <i class=" fa fa-chevron-right" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="creator container">
+    <ul id="list-element" class="list-element">
+        <li>
+            <i class="fa fa-user" aria-hidden="true"></i>
+            <a>
+
+                <p id="position-user">Người tạo</p>
+                <p id="name-user">Tên Đầy đủ</p>
+            </a>
+            <p>Mô tả</p>
+        </li>
+        
+
+    </ul>
+</div>
+<div class="list-tag">
+
+</div>
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            carousel();
+            
+        })
+        function carousel() {
+            var owl = $('.owl-carousel-new');
+            owl.owlCarousel({
+                items: 1,
+                loop: true,
+                margin: 15
+
+
+
+            });
+            $('.customNextBtn').click(function () {
+                owl.trigger('next.owl.carousel');
+            })
+            // Go to the previous item
+            $('.customPrevBtn').click(function () {
+                owl.trigger('prev.owl.carousel', [300]);
+            })
+
+        }
+
+        $('.tag-term').click(function () {
+            
+            this.innerText = 'Con mèo';
+        })
+        
+        
+    </script>    
+    
+}
+

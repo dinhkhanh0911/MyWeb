@@ -1,0 +1,11 @@
+D:\MyProject\DatabaseProvider\bin\Debug\net4.8\DatabaseProvider.dll.config
+D:\MyProject\DatabaseProvider\bin\Debug\net4.8\DatabaseProvider.dll
+D:\MyProject\DatabaseProvider\bin\Debug\net4.8\DatabaseProvider.pdb
+D:\MyProject\DatabaseProvider\bin\Debug\net4.8\EntityFramework.SqlServer.dll
+D:\MyProject\DatabaseProvider\bin\Debug\net4.8\EntityFramework.dll
+D:\MyProject\DatabaseProvider\obj\Debug\net4.8\DatabaseProvider.AssemblyInfoInputs.cache
+D:\MyProject\DatabaseProvider\obj\Debug\net4.8\DatabaseProvider.AssemblyInfo.cs
+D:\MyProject\DatabaseProvider\obj\Debug\net4.8\DatabaseProvider.csproj.CoreCompileInputs.cache
+D:\MyProject\DatabaseProvider\obj\Debug\net4.8\DatabaseProvider.csproj.CopyComplete
+D:\MyProject\DatabaseProvider\obj\Debug\net4.8\DatabaseProvider.dll
+D:\MyProject\DatabaseProvider\obj\Debug\net4.8\DatabaseProvider.pdb

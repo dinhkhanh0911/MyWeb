@@ -1,0 +1,192 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="body-left col-sm-12 col-md-12  col-lg-3">
+    @Html.Partial("_Menu")
+</div>
+<div class="body-right col-sm-12 col-md-12 col-xs-12 col-lg-9">
+    <div class="title-new">
+        <h3 class="text-center"> Học phần </h3>
+        <div class="searchHP">
+            <div class="form-group">
+                <input type="search" class="form-control form-control-user"
+                       id="inputSearch"
+                       placeholder="Tìm kiếm">
+                <span class="form-message"></span>
+                <button type="button" id="btn-search"><i class="fa fa-search" aria-hidden="true"></i></button>
+                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">
+                    <i class="fa fa-plus" aria-hidden="true">Thêm mới</i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="tlu-menu">
+
+        <div class="column-2">
+            <ul id="list-element">
+            </ul>
+            <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+
+                            <h4 class="modal-title">Thêm mới</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <input type="text" class="form-control form-control-user"
+                                       id="inputHocPhan"
+                                       placeholder="Nhập tên học phần">
+                                <span class="form-message"></span>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" id="btn-submit">Thêm</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                           
+                        </div>
+                       
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript"
+            src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js">
+    </script>
+    @section scripts{
+        
+        <script type="text/javascript">
+            $(document).ready(function () {
+                loadData();
+                
+
+
+            });
+            function addHocPhanNgoaiTao(v,n) {
+                
+                if (confirm("Bạn có muốn thêm học phần " +n+" vào phần ngoại tạo")) {
+                    $.ajax({
+                        url: '/HocPhan/addHocPhanNgoaiTao',
+                        type: 'post',
+                        data: {
+                            idHocPhan: v
+                        },
+                        success: function (data) {
+                            alert(data.msg)
+                        }
+                        
+                    })
+                }
+
+            }
+            $('#btn-submit').click(function () {
+
+                let inputHocPhan = $('#inputHocPhan').val().trim();
+
+                if (inputHocPhan == '' || inputHocPhan == null) {
+                    alert("Vui lòng nhập tên");
+                    return;
+                }
+
+                $.ajax({
+                    url: '/HocPhan/AddHocPhan',
+                    type: 'post',
+                    dataType: 'json',
+                    data: {
+                        inputHocPhan: inputHocPhan
+                    },
+
+                    // timeout milliseconds
+                    success: function (data) {   // success callback function
+                        if (data.code == 200) {
+
+                            console.log(data.msg);
+                            loadData();
+                        }
+                        else console.log(data.msg);
+
+                    },
+                })
+            });
+            function loadData() {
+                $.ajax(
+                {
+                    url: '/HocPhan/DsLop',
+                    type: 'get',
+                    dataType: 'json', // type of response data
+                    // timeout milliseconds
+                    success: function (data) {   // success callback function
+                        if (data.code == 200) {
+                            $('#list-element').empty();
+                            console.log(data)
+                            $.each(data.dsLop, function (k, v) {
+                                load(v);
+                            });
+                                   
+
+                        }
+                    },
+
+                });
+            };
+            $('#btn-search').click(function () {
+                let inputSearch = $('#inputSearch').val().trim();
+                if (inputSearch === '') {
+                    alert("Vui lòng nhập dữ liệu");
+                    return;
+                }
+                $.ajax({
+                    url :'/HocPhan/searchHP',
+                    type : 'post',
+                    data: {
+                        inputSearch: inputSearch
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        
+                        if (data.code == 200) {
+                            console.log(data.inputSearch);
+                            $('#list-element').empty();
+                            $.each(data.listHocPhan, function (k, v) {
+                                load(v);
+                                
+                            });
+                        }
+                        else console.log(data.inputSearch);
+                    },
+                });
+            })
+            $('#btn-remove').click({
+
+            });
+            
+           
+            function load(v) {
+                var addElement = '<li class="row" id="' + v.idHocPhan + ' ">';
+                addElement += '<a class="col-sm-9" id="' + v.idHocPhan + ' " >' + v.tenHocPhan;
+                addElement += '</a>';
+                addElement += '<div class = "tuyChonElement col-sm-3">'
+                addElement += '<button type="button"  name ="add" class="btn btn-info" id="' + v.idHocPhan + '" ><i class="fa fa-plus" aria-hidden="true"></i></button>';
+                addElement += '<button type="button" class="btn btn-warning"><i class="fa fa-trash" aria-hidden="true"></i></button>';
+                addElement += '<button type="button" class="btn btn-danger"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>';
+                addElement += '</div>';
+                addElement += '</li>';
+                $('#list-element').append(addElement);
+            }
+            $(document).on('click', "button[name='add']", function () {
+                
+                let n = this.parentElement.parentElement.querySelector('a').text
+                addHocPhanNgoaiTao(this.id, n)
+            })
+        </script>
+    }

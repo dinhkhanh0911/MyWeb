@@ -1,0 +1,108 @@
+﻿<meta style="background:#c0c0c0" http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<!DOCTYPE html>
+<html lang="vi">
+<head id="Head">
+    <!--*********************************************-->
+    <!-- DNN Platform - http://www.dnnsoftware.com   -->
+    <!-- Copyright (c) 2002-2016, by DNN Corporation -->
+    <!--*********************************************-->
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+    <title>
+        Học tiếng Anh online
+    </title>
+    <!-- <meta id="MetaDescription" name="DESCRIPTION" content="Faculty of Chemistry and Environment, Thuyloi University." />
+    <meta id="MetaKeywords" name="KEYWORDS" content="Khoa Môi trường, kỹ thuật môi trường, việc làm, đại học, học đại học, công nghệ, tuyển sinh, xin việc, ô nhiễm, xử lý, chất thải, không khí, nước, đất, biển, đại dương, sông, suối, hồ, chu trình, tuần hoàn, quản lý, nhà nước, quy trình,DotNetNuke,DNN" />
+    <meta id="MetaGenerator" name="GENERATOR" content="DotNetNuke " />
+    <meta id="MetaRobots" name="ROBOTS" content="INDEX, FOLLOW" /> -->
+    <link href="/Content/plugins/overlayScrollbars/css/OverlayScrollbars.min.css" type="text/css" rel="stylesheet" />
+
+    <link href="/Content/bootstrap.min.css" type="text/css" rel="stylesheet" />
+    <link href="/Content/bootstrap.css" type="text/css" rel="stylesheet" />
+    <link rel="stylesheet" href="/Content/plugins/fontawesome-free/css/all.min.css">
+    <link href="/Content/css/adminlte.min.css" type="text/css" rel="stylesheet" />
+    <link href="/Content/css/custom.css" type="text/css" rel="stylesheet" />
+    <link href="/Content/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css" type="text/css" rel="stylesheet" />
+    <link href="/Content/plugins/datatables-responsive/css/responsive.bootstrap4.min.css" type="text/css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    
+    
+
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="stylesheet" href="~/Asset/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="~/Asset/css/owl.carousel.min.css">
+    <link href="/Asset/css/style.css" rel="stylesheet"> 
+    
+</head>
+<body>
+
+    <div id="siteWrapper" class="wrapper">
+
+        <!-- UserControlPanel  -->
+        <div id="topHeader-">
+        </div>
+
+
+        <!-- Begin header -->
+        <header class="header">
+            <div class="top">
+                <div class="container-fuild">
+                    <div class="top__left">
+                        <h1><a href="/Home/Index"><img src="/Data/logoTA.png" class="Logo"></a></h1>
+
+                    </div>
+
+                    <div class="top__right">
+
+                        <div class="icon">
+                            <button class="notify">
+                                <i class="fa fa-bell" aria-hidden="true"></i>
+                            </button>
+                            <button class="personal" onclick="drop('personal-pane')">
+                                <i class="fa fa-user" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <p class="border-bottom"></p>
+                </div>
+
+            </div>
+            <div class="dropdown-pane" id="personal-pane">
+                <div class="dropdown-personal">
+                    <div class="noidung text-center">
+                        <a><p>Hồ sơ cá nhân</p></a>
+                        <a onclick="drop('qlcn-pane')"><p>Quản lý tài khoản</p></a>
+                        <a><p>Cài đặt</p></a>
+                        <a><p class="border-bottom"></p></a>
+                        <a href="/Login/dangXuat"><p>Đăng xuất</p></a>
+                    </div>
+                </div>
+            </div>
+            <div class="dropdown-pane" id="qlcn-pane">
+                <div class="dropdown-qlcn">
+                    <div class="noidung text-center">
+                        <a><p>Quản lý tài khoản</p></a>
+                        <a><p>Đổi mật khẩu</p></a>
+                        <a><p>Xóa tài khoản</p></a>
+
+                    </div>
+                </div>
+            </div>
+
+        </header>
+        <div class="container-fuild body-content">
+            @RenderBody()
+
+        </div>
+    </div>
+    <script src="~/Content/jquery.min.js" type="text/javascript"></script>
+    <script src="~/Asset/js/taplenh.js"></script>
+
+
+    @Scripts.Render("~/Content/jquery.min.js")
+    @RenderSection("scripts", required: false)
+    <script src="~/Asset/js/owl.carousel.min.js"></script>
+
+</body>
+</html>
+

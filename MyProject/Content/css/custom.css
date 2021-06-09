@@ -1,0 +1,17 @@
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(116, 182, 199, 0.21);
+    
+}
+.list-counter > ul{
+    text-align:center;
+}
+
+.list-counter > ul > li{
+    padding-top:10px;
+    padding-bottom:5px;
+    list-style-type:none;
+}
+    .list-counter > ul h3 {
+        text-align:center;
+        padding-top:30%;
+    }

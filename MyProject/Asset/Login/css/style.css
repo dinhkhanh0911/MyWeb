@@ -1,0 +1,15 @@
+.invalid input{
+    border-color: red;
+    
+  }
+.form-message {
+    font-size: 14px;
+    margin-left: 15px;
+    color: red;
+}
+@media (min-width:768px){
+    .col-md-2 {
+        max-width:100%;
+       
+    }
+}

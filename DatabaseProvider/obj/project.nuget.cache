@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "CLWc9pbLGTmCt5AzwK6NhD/ODu2WaweT72Wd4XPxvDXSxAfddcMLcuNz9K+7CovMabZF0lZHrmcBFG5tFJvgSw==",
+  "success": true,
+  "projectFilePath": "D:\\MyProject\\DatabaseProvider\\DatabaseProvider.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\dinhv\\.nuget\\packages\\entityframework\\6.4.4\\entityframework.6.4.4.nupkg.sha512"
+  ],
+  "logs": []
+}

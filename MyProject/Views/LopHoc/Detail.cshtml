@@ -1,0 +1,184 @@
+﻿@model DatabaseProvider.Models.LopHoc
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="classPageHeader-header">
+    <div class="container">
+        <div class="classPageHeader">
+            <div class="title-class row">
+                <div class="title-class-header col-sm-9">
+                    <i class="fa fa-users" aria-hidden="true"></i>
+                    <span class="text-title">Lớp @Model.tenLop</span>
+                    
+                </div>
+                <div class="title-class-action col-sm-2">
+                    <button type="button">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                    </button>
+                    <button type="button">
+                        <i class="fa fa-user-plus" aria-hidden="true"></i>
+                    </button>
+                    <button type="button">
+                        <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="option-class">
+                <a id="btn-1" class="option"> Học phần</a>
+                <a id="btn-2" class="option"> Thành viên</a>
+            </div>
+            
+        </div>
+    </div>
+</div>
+<div class="body-class" style="background-color:#F6F7FB; min-height:800px;">
+    <div class="container">
+        <div class="page-body">
+            <div class="body-right col-sm-12 col-md-12 col-xs-12 col-lg-9">
+                <div id="body-member" >
+                    <div class="body-link text-center">
+                        <h1 class="kc">Chia sẻ liên kết này với các bạn cùng lớp của bạn </h1>
+                        <p class="kc">
+                            Bất kỳ ai có URL đều có thể đăng ký và tự động tham gia lớp của bạn
+                        </p>
+                        <div class="Url kc">
+                            <div class="selection-text">
+                                @Model.idLopHoc 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list-member">
+                        <p class="border-bottom">Thành viên</p>
+                        <ul id="list-element" class="list-element">
+                            
+                            <li>
+                                <i class="fa fa-user" aria-hidden="true"></i>
+                                <a>
+
+                                    <p id="position-user">Giáo viên lớp học</p>
+                                    <p id="name-user">Tên Đầy đủ</p>
+                                </a>
+
+                            </li>
+                            <li>
+                                <i class="fa fa-user" aria-hidden="true"></i>
+                                <a>
+
+                                    <p id="position-user">Giáo viên lớp học</p>
+                                    <p id="name-user">Tên Đầy đủ</p>
+                                </a>
+
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+                <div id="body-term" class="show-element">
+                    <div class="body-link text-center">
+                        <h1 class="kc">Lớp học này chưa có học phần</h1>
+                        <p class="kc">
+                            Thêm một học phần hiện có hoặc tạo học phần mới để chia sẻ.
+                        </p>
+                        <button type="button" class="btn btn-submit">
+                            Thêm học phần
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="body-right col-sm-12 col-md-12  col-lg-3">
+                <p id="idLopHoc"></p>
+                <div class="infomation-class">
+                    
+                    <p>Chi tiết lớp học</p>
+                    <p><i class="fa fa-book" aria-hidden="true"></i> 1 Học phần</p>
+                    <p><i class="fa fa-users" aria-hidden="true"></i> 1 Thành viên</p>
+                    <p><i class="fa fa-info" aria-hidden="true"></i> Mô tả </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script type="text/javascript"
+        src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js">
+</script>
+@section scripts{
+
+    <script>
+        $(document).ready(function () {
+            active();
+            loadData();
+        })
+        function active() {
+            let options = document.querySelectorAll('.option');
+            console.log(options)
+            let body_term = document.querySelector('#body-term');
+            let body_member = document.querySelector('#body-member');
+            options.forEach(btn => {
+                btn.addEventListener('click', function () {
+                    options.forEach(button => button.classList.remove('active'));
+                    this.classList.add('active');
+                    if (this.id === 'btn-1') {
+                        console.log(this.id)
+                        body_term.style.display = 'block';
+                        body_member.style.display = 'none';
+                    }
+                    else {
+                        body_term.style.display = 'none';
+                        body_member.style.display = 'block';
+                    }
+                })
+            })
+        }
+        function loadData() {
+            let idLop = @Model.idLopHoc;
+            $.ajax({
+                url: '/LopHoc/loadDetailClass',
+                type: 'post',
+                data: {
+                    idLop: idLop
+                },
+                success: function (data) {
+                    if (data.code == 200) {
+                        loadMember(data.listHocSinh,data.giaoVien);
+                        console.log(data.listHocSinh, data.giaoVien);
+                    }
+                    
+                }
+            })
+        }
+        function loadMember(listHocSinh , giaoVien) {
+            $('#list-element').empty();
+            var addElement = '<li>';
+            addElement += '<i class="fa fa-user" aria-hidden="true"></i>';
+            addElement += '<a>';
+            addElement += '<p id="position-user">';
+            addElement += 'Giáo viên';
+            addElement += '</p>';
+            addElement += '<p id="name-user">' + giaoVien.fullName + '</p>';
+            addElement += '</a></li>';
+            $('#list-element').append(addElement);
+            $.each(listHocSinh, function (k, v) {
+                
+                console.log('a');
+                addElement = '<li>';
+                addElement += '<i class="fa fa-user" aria-hidden="true"></i>';
+                addElement += '<a>';
+                addElement += '<p id="position-user">';
+                addElement += 'Học sinh';
+                addElement += '</p>';
+                addElement += '<p id="name-user">' + v.fullName + '</p>';
+                addElement += '</a></li>';
+                $('#list-element').append(addElement);
+     
+            });
+        }
+    </script>
+}
+

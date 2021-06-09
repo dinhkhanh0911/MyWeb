@@ -1,0 +1,217 @@
+﻿@model DatabaseProvider.Models.HocPhan
+@{
+    ViewBag.Title = "EditTerm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="editHeader-back container ">
+    <div class="editHeader-back UIContainer">
+        <a href="/HocPhan/HocPhanTuTao"><i class="fa fa-chevron-left" aria-hidden="true"></i> Trở về học phần</a>
+    </div>
+    <div class="editHeader-infor">
+        <div class="row">
+            <div class="col-sm-7 edit-infor">
+                <div class="UIContainer">
+                    <div class="text-content">
+                        @Model.tenHocPhan
+                    </div>
+                    <span class="textarea-border"></span>
+                </div>
+                <div class="UIContainer">
+                    <div  class="text-content">
+                        Mô tả
+                    </div>
+                    <span class="textarea-border"></span>
+                </div>
+            </div>
+        </div>
+        <span class="textarea-border-1"></span>
+
+    </div>
+
+</div>
+<div class="editContainner container">
+    <div class="text-center">
+        Thẻ từ
+    </div>
+    <div class="list-tag">
+        <ul class="list" id="ds">
+            
+        </ul>
+        <div class="text-center">
+            <button type="button" class="btn btn-primary" id="btn-add-tag"> Thêm thẻ </button>
+        </div>
+        <div class="text-center">
+            <button type="button" class="btn btn-primary" id="btn-add-save"> Lưu </button>
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            loadData();
+
+        });
+
+        function loadData() {
+
+            let idHocPhan = @Model.idHocPhan ;
+            $.ajax({
+                url: '/TheTu/loadTheTu',
+                type: 'post',
+                data: {
+                    idHocPhan: idHocPhan
+                },
+                success: function (data) {
+                    if (data.code == 200) {
+                        $.each(data.listTheTu, function (k, v) {
+                            let i = Number (0);
+                            $('#ds').append(getElement(++i, 1, v));
+                        })
+                        console.log('b');
+                    }
+                }
+            });
+        }
+
+        function getElement(a,b,v) {
+            var addElement;
+            if (b === 1) {
+                addElement = '<li id="' + v.idTheTu + '">'
+            }
+            else addElement = '<li class="cardJustAdded">'
+            addElement += '<div class="row">'
+            addElement += '<div class="number-list col-sm-12">'
+            addElement += '<p class="col-sm-11" style="padding:0;"></p>'
+            addElement += '<button name="btn-delete" type="button" class="btn btn-primary"><i class="fa fa-trash" aria-hidden="true"></i></button>'
+            addElement += '<span class="textarea-border-1"></span>'
+            addElement += '</div>'
+            addElement += '<div class="col-sm-6 engWord">'
+            addElement += '<div id="test-1" contenteditable="true" class="text-content editContent">'
+            if (b === 1) addElement += v.engWord;
+            addElement += '</div > '
+            addElement += '<span class="textarea-border"></span>'
+            addElement += '</div>'
+            addElement += '<div class="col-sm-6 viWord">'
+            addElement += '<div contenteditable="true" class="text-content editContent">'
+            if (b === 1) addElement += v.viWord;
+            addElement += '</div >'
+            addElement += '<span class="textarea-border"></span>'
+            addElement += '</div></div ></li >'
+            return addElement;
+        }
+
+        $('#btn-add-tag').click(function () {
+            let termElement = document.querySelector('#ds li:last-child')
+            let a = Number (0)
+            if (termElement != null) {
+                a = Number (termElement.id)
+            }
+
+            console.log(a)
+            $('#ds').append(getElement(a+1,0,0));
+
+
+        });
+        $(document).on('click', "button[name='btn-delete']", function () {
+
+            let v = this.parentElement.parentElement.parentElement
+            
+            $(v).remove();
+            if (Number(v.id) !== 0) {
+                deleteTheTu(v)
+            }
+        });
+
+        $('body').on('blur keyup paste input', '[contenteditable]', function () {
+            const $this = $(this);
+            /*console.log(typeof $this.data('before'))*/
+            /*console.log($this.html())*/
+            if ($this.data('before') !== $this.html()) {
+                $this.data('before', $this.html());
+                $this.trigger('change');
+
+                let n = this.parentElement.parentElement.parentElement
+
+
+                $(n).addClass('cardJustEdited')
+
+
+            }
+        });
+        function deleteTheTu(v) {
+            $.ajax({
+                url: '/TheTu/deleteTheTu',
+                type: 'post',
+                data: {
+                    idTheTu: v.id
+                },
+                success: function (data) {
+                    console.log(data.code);
+                    console.log(data.msg);
+                }
+            })
+        }
+        function addTheTu(v) {
+            let idHocPhan = @Model.idHocPhan ;
+            let a = v.querySelectorAll('.editContent');
+            let val_1 = a[0].textContent.trim();
+            let val_2 = a[1].textContent.trim();
+            if (val_1 === '' || val_2 === '') {
+                return;
+            }
+            $.ajax({
+                url: '/TheTu/addTheTu',
+                type: 'post',
+                data: {
+                    engWord: val_1,
+                    viWord: val_2,
+                    idHocPhan: idHocPhan
+                },
+                success: function (data) {
+                    console.log(data.code);
+                    console.log(data.msg);
+                }
+            })
+        }
+        function editTheTu(v) {
+            let idTheTu = v.id;
+            let a = v.querySelectorAll('.editContent');
+            let val_1 = a[0].textContent.trim();
+            let val_2 = a[1].textContent.trim();
+            if (val_1 === '' || val_2 === '') {
+                return;
+            }
+            $.ajax({
+                url: '/TheTu/editTheTu',
+                type: 'post',
+                data: {
+                    engWord: val_1,
+                    viWord: val_2,
+                    idTheTu: idTheTu
+                },
+                success: function (data) {
+                    console.log(data.code);
+                    console.log(data.msg);
+                }
+            })
+        }
+        $('#btn-add-save').click(function () {
+            lis = document.querySelectorAll('#ds li');
+
+
+            lis.forEach(function (v) {
+                console.log(v);
+                if ($(v).hasClass('cardJustAdded')) {
+                    addTheTu(v);
+                }
+                else if ($(v).hasClass('cardJustEdited')) {
+                    editTheTu(v);
+                }
+            });
+        });
+
+    </script>
+    
+    
+}

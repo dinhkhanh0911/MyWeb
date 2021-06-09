@@ -1,0 +1,196 @@
+﻿
+@{
+    ViewBag.Title = "LopHocTuTao";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="body-left col-sm-12 col-md-12  col-lg-3">
+    @Html.Partial("_Menu")
+</div>
+<div class="body-right col-sm-12 col-md-12 col-xs-12 col-lg-9">
+    <div class="title-new">
+        <h3 class="text-center"> Học phần </h3>
+        <div class="searchHP">
+            <div class="form-group">
+                <input type="search" class="form-control form-control-user"
+                       id="inputSearch"
+                       placeholder="Tìm kiếm">
+                <span class="form-message"></span>
+                <button type="button" id="btn-search"><i class="fa fa-search" aria-hidden="true"></i></button>
+                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">
+                    <i class="fa fa-plus" aria-hidden="true">Thêm mới</i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="tlu-menu">
+
+        <div class="column-2">
+            <ul id="list-element">
+            </ul>
+            <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+
+                            <h4 class="modal-title">Thêm mới</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <input type="text" class="form-control form-control-user"
+                                       id="inputTen"
+                                       placeholder="Nhập tên lớp học">
+                                <span class="form-message"></span>
+                                <input type="text" class="form-control form-control-user"
+                                       id="inputMoTa"
+                                       placeholder="Nhập mô tả">
+                                <span class="form-message"></span>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" id="btn-submit">Thêm</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script type="text/javascript"
+        src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js">
+</script>
+@section scripts{
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            loadData();
+
+
+
+        });
+        $('#btn-submit').click(function () {
+
+            let tenLopHoc = $('#inputTen').val().trim();
+            let descriptionClass = $('#inputMoTa').val().trim();
+            if (inputTen == '' || inputMoTa =='') {
+                alert("Vui lòng nhập tên");
+                return;
+            }
+
+            $.ajax({
+                url: '/LopHoc/addLopHoc',
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    tenLopHoc: tenLopHoc,
+                    descriptionClass: descriptionClass
+
+                },
+                success: function (data) {   // success callback function
+                    if (data.code == 200) {
+
+                        console.log(data.msg);
+                        loadData();
+                    }
+                    else console.log(data.msg);
+
+                },
+            })
+        });
+        function loadData() {
+            $.ajax(
+                {
+                    url: '/LopHoc/loadLopHoc',
+                    type: 'get',
+                    dataType: 'json', // type of response data
+                    // timeout milliseconds
+                    success: function (data) {   // success callback function
+                        if (data.code == 200) {
+                            $('#list-element').empty();
+                            
+                            $.each(data.dsLopHoc, function (k, v) {
+                                load(v);
+                            });
+
+
+                        }
+                    },
+
+                });
+        };
+        function load(v) {
+            console.log(typeof v.idLopHoc);
+            var addElement = '<li class="row">';
+            addElement += '<a href = "/LopHoc/DeTail/' + v.idLopHoc + '" class="col-sm-9" id="' + v.idLopHoc + ' " >' + v.tenLop;
+            addElement += '</a>';
+            addElement += '<div class = "tuyChonElement col-sm-3">'
+            addElement += '<button type="button" class="btn btn-info"><i class="fa fa-plus" aria-hidden="true"></i></button>';
+            addElement += '<button type="button" name="remove" class="btn btn-warning" id="' + v.idLopHoc + ' " ><i class="fa fa-trash" aria-hidden="true"></i></button>';
+            addElement += '<button type="button" class="btn btn-danger"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>';
+            addElement += '</div>';
+            addElement += '</li>';
+            $('#list-element').append(addElement);
+        }
+        $('#btn-search').click(function () {
+            let inputSearch = $('#inputSearch').val().trim();
+            if (inputSearch === '') {
+                alert("Vui lòng nhập dữ liệu");
+                return;
+            }
+            $.ajax({
+                url: '/LopHoc/searchClass',
+                type: 'post',
+                data: {
+                    inputSearch: inputSearch
+                },
+                dataType: 'json',
+                success: function (data) {
+
+                    if (data.code == 200) {
+                        console.log(data.inputSearch);
+                        
+                        $('#list-element').empty();
+                        console.log(data.dsLopHoc)
+                        $.each(data.dsLopHoc, function (k, v) {
+
+                            load(v);
+                        });
+                    }
+                    else console.log(data.inputSearch);
+                },
+            });
+        })
+        $(document).on('click', "button[name='remove']", function () {
+
+            let n = this.parentElement.parentElement.querySelector('a').text
+            removeClass(this.id, n)
+        })
+        function removeClass(v, n) {
+
+            if (confirm("Bạn có muốn xóa học phần " + n )) {
+                $.ajax({
+                    url: '/LopHoc/removeCLass',
+                    type: 'post',
+                    data: {
+                        idLopHoc: v
+                    },
+                    success: function (data) {
+                        console.log(data.msg);
+                        if (data.code==200) loadData();
+                    }
+
+                })
+            }
+
+        }
+    </script>
+}
+
+
